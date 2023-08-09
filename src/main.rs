@@ -1,67 +1,9 @@
+mod models;
+
 use std::collections::HashMap;
 use std::env;
-use serde::Deserialize;
 
-#[derive(Debug, Deserialize)]
-struct CurrentWeatherResponse {
-    coord: Coordinates,
-    weather: Vec<Weather>,
-    base: String,
-    main: Main,
-    visibility: u32,
-    wind: Wind,
-    clouds: Clouds,
-    dt: u32,
-    sys: Sys,
-    timezone: u32,
-    id: u32,
-    name: String,
-    cod: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct Coordinates {
-    lat: f64,
-    lon: f64,
-}
-
-#[derive(Debug, Deserialize)]
-struct Weather {
-    id: u32,
-    main: String,
-    description: String,
-    icon: String,
-}
-
-#[derive(Debug, Deserialize)]
-struct Main {
-    temp: f64,
-    feels_like: f64,
-    temp_min: f64,
-    temp_max: f64,
-    pressure: u32,
-    humidity: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct Wind {
-    speed: f64,
-    deg: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct Clouds {
-    all: u32,
-}
-
-#[derive(Debug, Deserialize)]
-struct Sys {
-    r#type: u32,
-    id: u32,
-    country: String,
-    sunrise: u32,
-    sunset: u32,
-}
+use crate::models::open_weather_map::current_weather::CurrentWeatherResponse;
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
