@@ -12,10 +12,23 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let api_key = &args[1];
     println!("Using Open Weather Map API key: {}", api_key);
 
-    let resp = reqwest::get("https://httpbin.org/ip")
+    let latitude = 35.689501375244;
+    let longitude = 139.69173371705;
+
+    let mut query = HashMap::new();
+    query.insert("lat", latitude.to_string());
+    query.insert("lon", longitude.to_string());
+    query.insert("appid", api_key.to_string());
+
+    let client = reqwest::Client::new();
+
+    let resp = client.get("https://api.openweathermap.org/data/2.5/weather")
+        .query(&query)
+        .send()
         .await?
-        .json::<HashMap<String, String>>()
+        .text()
         .await?;
+
     println!("{:#?}", resp);
 
     return Ok(());
